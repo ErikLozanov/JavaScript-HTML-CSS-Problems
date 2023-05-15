@@ -3,6 +3,11 @@ function search() {
    let townElementsArr = Array.from(townElements);
    let searchTextElement = document.getElementById('searchText').value;
    let matchesCounter = 0;
+   let matchResultElement = document.getElementById('result');
+   if(searchTextElement.length === 0) {
+   matchResultElement.textContent = `Please insert any keywords.`
+      return;
+   }
    townElementsArr.forEach(x => x.style='text-decoration: none ; font-weight: normal;')
    for(let town of townElementsArr) {
 
@@ -11,7 +16,6 @@ function search() {
          matchesCounter++;
       }
    }
-   let matchResultElement = document.getElementById('result');
    matchResultElement.textContent = `${matchesCounter} matches found`
 }
 
