@@ -6,6 +6,8 @@ function search() {
    let matchResultElement = document.getElementById('result');
    if(searchTextElement.length === 0) {
    matchResultElement.textContent = `Please insert any keywords.`
+   townElementsArr.forEach(x => x.style='text-decoration: none ; font-weight: normal;')
+
       return;
    }
    townElementsArr.forEach(x => x.style='text-decoration: none ; font-weight: normal;')
