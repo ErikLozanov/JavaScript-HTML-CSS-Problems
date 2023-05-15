@@ -12,6 +12,7 @@ body {
     text-align: center;
     padding: 40px 20px;
     border-radius: 10px;
+    min-width: 200px;
 }
 
 input[type="text"] {
