@@ -16,13 +16,14 @@ function solve() {
     resultElement.textContent = result;
 
     function camelCase(text) {
-      text = tex
+      text = text.toLowerCase();
       return text
       .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
       .replace(/\s/g, '')
       .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
     }
     function pascalCase(text) {
+      text = text.toLowerCase();
       return text.replace(/(\w)(\w*)/g,
       function(g0,g1,g2){return g1.toUpperCase() + g2.toLowerCase();})
       .replace(/\s/g, '');
