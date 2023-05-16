@@ -13,40 +13,40 @@ function solve() {
       let bestSalary = 0;
       let [pizzaName, workers] = restaurant.split(" - ");
       let workersArr = workers.split(", ");
-      if (!data.hasOwnProperty(pizzaName)) {
-        data[pizzaName] = {};
-      }
       for (let worker of workersArr) {
-        let [name, paycut] = worker.split(" ");
-        data[pizzaName][name] = Number(paycut);
+         let [name, paycut] = worker.split(" ");
+         if (!data.hasOwnProperty(pizzaName)) {
+            data[pizzaName] = {};
+          }
+         if (data.hasOwnProperty(pizzaName)) {
+            data[pizzaName][name] = Number(paycut);
+          }
         totalPaycut += Number(paycut);
-        if (Number(paycut) > bestSalary) {
-          bestSalary = Number(paycut);
-        }
       }
 
       totalPaycut = totalPaycut / workersArr.length;
-      data[pizzaName].average = totalPaycut.toFixed(2);
-      data[pizzaName].bestSalary = bestSalary.toFixed(2);
+      data[pizzaName].average = totalPaycut;
 
       totalPaycut = 0;
     }
 
     // console.log(data);
-
     let bestOne = document.querySelector("#bestRestaurant p");
     let bestWorkers = document.querySelector("#workers p");
     let bestR = bestRestaurantCalc(data);
-    bestOne.textContent = `Name: ${bestR} Average Salary: ${(data[bestR].average).toFixed(2)} Best Salary: ${(data[bestR].bestSalary).toFixed(2)}`;
+    let bestSalary = bestSalaryFunc(data,bestR);
+    bestOne.textContent = `Name: ${bestR} Average Salary: ${(data[bestR].average).toFixed(2)} Best Salary: ${bestSalary.toFixed(2)}`;
+   //  console.log(data[bestR].average);
+   //  console.log(data[bestR].bestSalary);
     bestWorkers.textContent = bestWorkersCalc(data, bestR);
 
     function bestRestaurantCalc(data) {
       let best = "";
-      let bestCounter = 0;
+      let bestAvgSalary = 0;
       for (let restaurant of Object.entries(data)) {
         let average = restaurant[1].average;
-        if (average > bestCounter) {
-          bestCounter = average;
+        if (average > bestAvgSalary) {
+          bestAvgSalary = average;
           best = restaurant[0];
         }
       }
@@ -56,14 +56,21 @@ function solve() {
       let textLog = "";
       let bestRestaurant = data[bestR];
       delete bestRestaurant.average;
-      delete bestRestaurant.bestSalary;
       let sortedBest = Object.entries(bestRestaurant).sort(
         (a, b) => b[1] - a[1]
       );
       for ([worker, salary] of sortedBest) {
         textLog += `Name: ${worker} With Salary: ${salary} `;
       }
-      return textLog.trim();
+      return textLog;
+    }
+    function bestSalaryFunc(data,bestR) {
+      let bestRestaurant = data[bestR];
+      let sortedBest = Object.entries(bestRestaurant).sort(
+        (a, b) => b[1] - a[1]
+      );
+      console.log(sortedBest);
+      return Number(sortedBest[0][1]);
     }
   }
 }
