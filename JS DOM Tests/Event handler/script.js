@@ -7,8 +7,7 @@ function solve() {
     let movieCounter = 0;
     let addedMoviesElement = document.querySelector('p span');
     let testChild = document.createElement('h2');
-    // header.appendChild(testChild);
-    header.appendChild('Hi!');
+    header.appendChild(testChild);
     inputElement.addEventListener('focus', () => {
         buttonElement.disabled = false;
         inputElement.style.backgroundColor ='transparent';
@@ -26,7 +25,7 @@ function solve() {
         addedMoviesElement.textContent = movieCounter;
     })
     movieListElement.addEventListener('click', function (el) {
-        el.target.remove();
+        console.log(this.currentTarget);
         movieCounter--;
         addedMoviesElement.textContent = movieCounter;
     })
