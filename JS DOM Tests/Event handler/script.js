@@ -7,7 +7,8 @@ function solve() {
     let movieCounter = 0;
     let addedMoviesElement = document.querySelector('p span');
     let testChild = document.createElement('h2');
-    header.appendChild(testChild);
+    // header.appendChild(testChild);
+    header.appendChild('Hi!');
     inputElement.addEventListener('focus', () => {
         buttonElement.disabled = false;
         inputElement.style.backgroundColor ='transparent';
