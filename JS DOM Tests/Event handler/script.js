@@ -10,9 +10,9 @@ function solve() {
     header.appendChild(testChild);
     inputElement.addEventListener('focus', () => {
         buttonElement.disabled = false;
-        inputElement.style.backgroundColor ='transparent';
-        inputElement.style.boxShadow = '1px 1px green';
+
     })
+
     buttonElement.addEventListener('click', () => {
         if(inputElement.value === '') {
             return;
@@ -25,7 +25,7 @@ function solve() {
         addedMoviesElement.textContent = movieCounter;
     })
     movieListElement.addEventListener('click', function (el) {
-        console.log(this.currentTarget);
+        el.target.remove();
         movieCounter--;
         addedMoviesElement.textContent = movieCounter;
     })
