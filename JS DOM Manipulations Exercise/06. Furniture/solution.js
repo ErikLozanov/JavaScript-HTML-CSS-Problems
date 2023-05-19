@@ -14,18 +14,35 @@ function solve() {
   generateBtn.addEventListener("click", generate);
 
   buyBtn.addEventListener("click", () => {
+
+    let inputArr = Array.from(inputs);
+    inputs[1].checked = true;
+    inputs[2].checked = true;
+    for(let input of inputs) {
+    if (input.checked === true) {
+      let parentEl = input.parentElement.parentElement;
+      console.log(parentEl);
+      let [name, price, factor] = Array.from(
+        parentEl.getElementsByTagName("p")
+      );
+      console.log(name);
+      shoppingCart.push(name.textContent);
+      totalPrice += Number(price.textContent);
+      totalDecFactor.push(Number(factor.textContent));
+    }
+  }
+
+
     let totalDecFacNumber = totalDecFactor.reduce((acc, val) => acc + val, 0);
     let averageDecFac = totalDecFacNumber / totalDecFactor.length;
 
-    // outputArea.value = `Bought furniture: ${shoppingCart.join(', ')}`;
-    // outputArea.value += `\nTotal price: ${totalPrice.toFixed(2)}`;
-    // outputArea.value += `\nAverage decoration factor: ${averageDecFac}`;
-
-    outputArea.value = `Bought furniture: ${shoppingCart.join(', ')}\nTotal price: ${totalPrice.toFixed(2)}\nAverage decoration factor: ${averageDecFac}`;
+    outputArea.value = `Bought furniture: ${shoppingCart.join(', ')}\nTotal price: ${totalPrice.toFixed(2)} Average decoration factor: ${averageDecFac}`;
+  
+    console.log(outputArea.value);
   });
-
-  tbodyElement.addEventListener("click", checkboxChecker);
-
+  let inputs = document.getElementsByTagName('input');
+  
+  
   function generate() {
     let parsedInput = JSON.parse(inputElementText.value);
     for (let el of parsedInput) {
@@ -49,27 +66,13 @@ function solve() {
           newTrElement.appendChild(newTdElement);
         }
       }
-      //  <input type="checkbox">
       let tdForCheckBox = document.createElement("td");
       let inputForCheckBox = document.createElement("input");
       inputForCheckBox.type = "checkbox";
       tdForCheckBox.appendChild(inputForCheckBox);
-      // let markBoxClone = markBoxTd.cloneNode(true);
       newTrElement.appendChild(tdForCheckBox);
       tbodyElement.appendChild(newTrElement);
     }
   }
-
-  function checkboxChecker(e) {
-    if (e.target.nodeName === "INPUT" && e.target.checked) {
-      let parentEl = e.target.parentElement.parentElement;
-
-      let [name, price, factor] = Array.from(
-        parentEl.getElementsByTagName("p")
-      );
-      shoppingCart.push(name.textContent);
-      totalPrice += Number(price.textContent);
-      totalDecFactor.push(Number(factor.textContent));
-    }
-  }
+  
 }
