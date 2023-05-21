@@ -1,78 +1,61 @@
 function solve() {
-  let inputElementText = document.querySelector(
-    "#exercise textarea:nth-of-type(1)"
-  );
-  let generateBtn = document.querySelector("#exercise button:nth-of-type(1)");
-  let buyBtn = document.querySelector("#exercise button:nth-of-type(2)");
-  let tbodyElement = document.querySelector("tbody");
-  let markBoxTd = document.querySelector("tbody tr td:nth-of-type(5)");
-  let outputArea = document.querySelector("#exercise textarea:nth-of-type(2)");
-  markBoxTd.lastElementChild.disabled = false;
-  let shoppingCart = [];
-  let totalPrice = 0;
-  let totalDecFactor = [];
-  generateBtn.addEventListener("click", generate);
 
-  buyBtn.addEventListener("click", () => {
+  let [generateBtn, buyBtn] = document.querySelectorAll('button');
 
-    let inputArr = Array.from(inputs);
-    inputs[1].checked = true;
-    inputs[2].checked = true;
-    for(let input of inputs) {
-    if (input.checked === true) {
-      let parentEl = input.parentElement.parentElement;
-      console.log(parentEl);
-      let [name, price, factor] = Array.from(
-        parentEl.getElementsByTagName("p")
-      );
-      console.log(name);
-      shoppingCart.push(name.textContent);
-      totalPrice += Number(price.textContent);
-      totalDecFactor.push(Number(factor.textContent));
-    }
-  }
+  generateBtn.addEventListener('click', generate);
 
+  buyBtn.addEventListener('click', buy);
 
-    let totalDecFacNumber = totalDecFactor.reduce((acc, val) => acc + val, 0);
-    let averageDecFac = totalDecFacNumber / totalDecFactor.length;
-
-    outputArea.value = `Bought furniture: ${shoppingCart.join(', ')}\nTotal price: ${totalPrice.toFixed(2)} Average decoration factor: ${averageDecFac}`;
-  
-    console.log(outputArea.value);
-  });
-  let inputs = document.getElementsByTagName('input');
-  
-  
   function generate() {
-    let parsedInput = JSON.parse(inputElementText.value);
-    for (let el of parsedInput) {
-      let newTrElement = document.createElement("tr");
-      for (let key of Object.keys(el)) {
-        let imgChecker = false;
-        let newTdElement = document.createElement("td");
-        if (key === "img") {
-          let imgElement = document.createElement("img");
-          imgElement.src = el[key];
-          newTdElement.appendChild(imgElement);
-          imgChecker = true;
-        } else {
-          let pElement = document.createElement("p");
-          pElement.textContent = el[key];
-          newTdElement.appendChild(pElement);
-        }
-        if (imgChecker) {
-          newTrElement.insertBefore(newTdElement, newTrElement.firstChild);
-        } else {
-          newTrElement.appendChild(newTdElement);
-        }
-      }
-      let tdForCheckBox = document.createElement("td");
-      let inputForCheckBox = document.createElement("input");
-      inputForCheckBox.type = "checkbox";
-      tdForCheckBox.appendChild(inputForCheckBox);
-      newTrElement.appendChild(tdForCheckBox);
-      tbodyElement.appendChild(newTrElement);
-    }
+    let input = JSON.parse(document.querySelector('textarea').value);
+
+    input.forEach(x => {
+    let tr = document.createElement('tr');
+    let td1 = document.createElement('td');
+    let img = document.createElement('img');
+    img.src = x.img;
+    td1.appendChild(img);
+    tr.appendChild(td1);
+    let td2 = document.createElement('td');
+    let p1 = document.createElement('p');
+    p1.textContent = x.name;
+    td2.appendChild(p1);
+    tr.appendChild(td2);
+    let td3 = document.createElement('td');
+    let p2 = document.createElement('p');
+    p2.textContent = x.price;
+    td3.appendChild(p2);
+    tr.appendChild(td3);
+    let td4 = document.createElement('td');
+    let p3 = document.createElement('p');
+    p3.textContent = x.decFactor;
+    td4.appendChild(p3);
+    tr.appendChild(td4);
+    let td5 = document.createElement('td');
+    let input = document.createElement('input');
+    input.type = 'checkbox';
+    td5.appendChild(input);
+    tr.appendChild(td5);
+    document.querySelector('tbody').appendChild(tr);
+    });
   }
-  
+
+
+  function buy () {
+    let checkBoxes = Array.from(document.querySelectorAll('tbody input')).filter(x => x.checked);
+    let boughtItems = [];
+    let decFactor = 0;
+    let totalPrice = 0;
+    checkBoxes.forEach(element => {
+      let tdParent = element.parentElement.parentElement;
+      boughtItems.push(tdParent.querySelector('td:nth-of-type(2) p').textContent);
+      totalPrice+= Number(tdParent.querySelector('td:nth-of-type(3) p').textContent);
+      decFactor+= Number(tdParent.querySelector('td:nth-of-type(4) p').textContent)
+    })
+    let outputTextArea = document.querySelector('textarea:nth-of-type(2)');
+    outputTextArea.value += `Bought furniture: ${boughtItems.join(', ')}`;
+    outputTextArea.value += `\nTotal price: ${totalPrice.toFixed(2)}`;
+    outputTextArea.value += `\nAverage decoration factor: ${decFactor / checkBoxes.length}`;
+  }
+
 }
