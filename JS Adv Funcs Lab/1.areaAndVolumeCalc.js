@@ -17,7 +17,7 @@ function area() {
        })
     })
 
-    console.table(result);
+    return result;
 }
 
 solve(area, vol, `[
