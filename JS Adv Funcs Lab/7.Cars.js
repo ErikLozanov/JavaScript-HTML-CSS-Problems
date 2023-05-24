@@ -1,25 +1,25 @@
 function solve(commands) {
-  let cars = {};
 
-  let obj = {
-    create(name, inherits, value) {cars[name] = inherits ? Object.create(cars[value]) : {}} ,
+    let cars = {};
 
-    set(name, key, value) {cars[name][key] = value },
-    print(name) {
-      let entry = [];
-      for (let key in cars[name]) {
-        entry.push(`${key}:${cars[name][key]}`);
-      }
-      console.log(entry.join(","));
-    },
-  };
+    let obj = {
+        create(obj1,inherit,obj2){cars[obj1] = inherit ? Object.create(cars[obj2]):{}},
+        set(name,key,value) {cars[name][key] = value;},
+        print(name) {
+            let result = [];
+            for(let el in cars[name]){
+                result.push(`${el}:${cars[name][el]}`);
+            }
+            console.log(result.join(','));
+        }
+    }
+    for(let input of commands) {
 
-  for (let command of commands) {
-    let [cmd, name, key, value] = command.split(" ");
-    obj[cmd](name, key, value);
-  }
-  console.log(cars);
+        let [cmd,obj1,inherit,obj2] = input.split(' ');
+        obj[cmd](obj1,inherit,obj2);
+    }
 }
+
 
 solve([
   "create c1",
