@@ -1,30 +1,27 @@
-function cars(input) {
-    let result = [];
+function solve(commands) {
+  let cars = {};
 
+  let obj = {
+    create(name, inherits, value) {cars[name] = inherits ? Object.create(cars[value]) : {}} ,
 
-    for(let el of input) {
-        if(el.includes('inherit')) {
-            let [not,obj,no,obj1] = el.split(' ');
+    set(name, key, value) {cars[name][key] = value },
+    print(name) {
+      let entry = [];
+      for (let key in cars[name]) {
+        entry.push(`${key}:${cars[name][key]}`);
+      }
+      console.log(entry.join(","));
+    },
+  };
 
-        } else if(el.includes('set')) {
-            let [cmd,obj,property,value] = el.split(' ');
-
-            result.obj[property] = value;
-        } else if(el.includes('print')) {
-            let [cmd,objName] = el.split(' ');
-            console.log(result.objName);
-        }
-        
-        else {
-        let [cmd,name] = el.split(' ');
-
-        name = {};
-        result.push(name);
-        }
-        
-    }
+  for (let command of commands) {
+    let [cmd, name, key, value] = command.split(" ");
+    obj[cmd](name, key, value);
+  }
+  console.log(cars);
 }
-cars([
+
+solve([
   "create c1",
   "create c2 inherit c1",
   "set c1 color red",
