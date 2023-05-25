@@ -2,6 +2,8 @@ function solve() {
     let addButtonElement = document.getElementById('add');
     addButtonElement.type = 'button';
     addButtonElement.addEventListener('click', check);
+    
+    
     function check() {
     let openDivSection = document.querySelector('section:nth-of-type(2) div:nth-of-type(2)')
         let taskElement = document.getElementById('task').value;
@@ -61,9 +63,11 @@ function solve() {
         button2Finish.addEventListener('click', finish);
     }
 
+    
     function del(e) {
         e.currentTarget.parentElement.parentElement.remove();
     }
+
 
     function finish(e) {
         let currArticle = e.currentTarget.parentElement.parentElement;
