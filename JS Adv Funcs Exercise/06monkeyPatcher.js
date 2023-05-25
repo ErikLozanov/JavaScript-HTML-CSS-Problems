@@ -5,34 +5,31 @@ function solution(rating) {
     } else if(rating === 'downvote') {
         this.downvotes+=1;
     } else if(rating === 'score') {
-        let totalVotes = this.upvotes + this.downvotes;
-        let reportedUpvotes = 0;
-        let reportedDownvotes = 0;
-        if(totalVotes > 50) {
-            let greaterValue = this.upvotes > this.downvotes ? this.upvotes : this.downvotes;
-            let inflatedScore = Math.ceil(greaterValue * 0.25);
-           reportedUpvotes+= this.upvotes+ inflatedScore;
-           reportedDownvotes+= this.downvotes+ inflatedScore;
-        } else {
-            reportedUpvotes = this.upvotes
-            reportedDownvotes = this.downvotes
-        }
-        arrRating.push(reportedUpvotes);
-        arrRating.push(reportedDownvotes);
-        let percentage = (reportedUpvotes * 100) / (reportedDownvotes + reportedUpvotes);
-        let balance = reportedUpvotes - reportedDownvotes;
-        arrRating.push(balance);
-        if(balance > 66) {
-            arrRating.push('hot');
-        } else if(balance >= 0 && reportedUpvotes + reportedDownvotes > 100) {
-            arrRating.push('controversial');
+        let upvote = this.upvotes;
+        let downvote = this.downvotes;
+        let totalVotes = upvote + downvote;
+        let balance = upvote - downvote;
+        let rate = '';
+
+        if(upvote > totalVotes * 0.66) {
+            rate = 'hot';
+        } else if(balance >= 0 &&  (upvote > 100 || downvote > 100)) {
+             rate = 'controversial';
         } else if(balance < 0) {
-            arrRating.push('unpopular');
-        } else if(reportedDownvotes+reportedDownvotes < 10) {
-            arrRating.push('new');
+            rate = 'unpopular';
+        } else if(totalVotes < 10) {
+            rate = 'new';
         }
+    
+    if(totalVotes > 50) {
+        let greaterValue = upvote > downvote ? upvote : downvote;
+        let inflatedScore = Math.ceil(greaterValue * 0.25);
+       let reportedUpvotes = upvote+ inflatedScore;
+       let reportedDownvotes = downvote+ inflatedScore;
+       return [reportedUpvotes,reportedDownvotes,balance,rate];
     }
-    return arrRating;
+    return [upvote, downvote, balance, rate];
+}
 }
 
 let post = {
