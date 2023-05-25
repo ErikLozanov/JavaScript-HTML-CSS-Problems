@@ -1,5 +1,5 @@
 function calculator() {
-    console.log(this.document);
+    console.log(document.getElementById('num1').value);
     return {
         init(selector1,selector2,resultSelector) {
             
