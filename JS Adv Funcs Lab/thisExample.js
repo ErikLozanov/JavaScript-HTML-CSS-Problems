@@ -13,7 +13,8 @@ let person = {
         this.age += 1;
  
         if(this.age % 10 === 0) {
-            printCelebration();
+            let bound = printCelebration.bind(person);
+            bound();
         }
  
         printCelebration();
@@ -38,9 +39,9 @@ let person = {
         printCelebration();
     }
 }
- 
-// person.celebrateBirthday();
-person.celebrateBirthday2();
+ let bounding = person.celebrateBirthday;
+bounding();
+// person.celebrateBirthday2();
  
 // 'this' example 2
 let employee = {
@@ -60,5 +61,5 @@ let employee = {
     }
 }
  
-// employee.address.printAddress();
-employee.address.printAddress2();
+employee.address.printAddress();
+// employee.address.printAddress2();
