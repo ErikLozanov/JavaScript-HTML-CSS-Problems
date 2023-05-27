@@ -21,3 +21,10 @@ function sort(input, order) {
 console.log(sort([14, 7, 17, 6, 8], "asc"));
 
 ;
+
+function hi() {
+
+  return function() {
+    let a = 0;
+  }
+}
