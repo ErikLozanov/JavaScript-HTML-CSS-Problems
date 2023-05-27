@@ -60,5 +60,5 @@ let employee = {
     }
 }
  
-employee.address.printAddress();
-// employee.address.printAddress2();
+// employee.address.printAddress();
+employee.address.printAddress2();
