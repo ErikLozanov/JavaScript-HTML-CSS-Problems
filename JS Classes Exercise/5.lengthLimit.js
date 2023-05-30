@@ -3,14 +3,25 @@ class Stringer{
         this.innerString = string;
         this.innerLength = length;
     }
-    toString() {
-        return this.innerString;
+    increase(value) {
+        this.innerLength += value;
     }
-    decrease(index) {
-        if(this.innerString.length - index < 0) {
-            index = 0;
+    decrease(value) {
+        if(this.innerLength - value < 0) {
+            this.innerLength = 0;
+        } else {
+        this.innerLength -= value;
+    }
+    }
+
+    toString() {
+        if(this.innerString.length > this.innerLength) {
+            return this.innerString.substring(0,this.innerLength) + '...';
+        } else if(this.innerLength === 0) {
+            return '...';
+        } else {
+            return this.innerString;
         }
-        return this.innerString = this.innerString.slice(0,index-1) + ".".repeat(index);
     }
 }
 
@@ -22,3 +33,4 @@ test.decrease(5);
 console.log(test.toString()); // ...
 test.increase(4);
 console.log(test.toString()); // Test
+
