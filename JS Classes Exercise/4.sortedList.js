@@ -5,24 +5,26 @@ class List {
   }
   add(el) {
     this.arr.push(el);
-    this.arr = this.arr.sort((a, b) => a - b);
+    this.arr.sort((a, b) => a - b);
     this.size++;
     return;
   }
   remove(index) {
-    if (index < 0 || index >= this.list.length) {
-      throw new Error();
-    }
+    if (index < 0 || index >= this.arr.length) {
+      throw new Error(`Index doesn't exist`);
+    } else {
 
     this.arr.splice(index, 1);
     this.size--;
     return;
+}
   }
   get(index) {
-    if (index < 0 || index >= this.list.length) {
-      throw new Error();
-    }
+    if (index < 0 || index >= this.arr.length) {
+      throw new Error(`Index doesn't exist`);
+    } else {
     return this.arr[index];
+}
   }
 }
 
