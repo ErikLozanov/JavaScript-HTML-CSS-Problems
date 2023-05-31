@@ -41,4 +41,5 @@ let dog = {
 
 let myDog = Object.create(dog);
 myDog.name = 'Marcho';
-myDog.bark()
+myDog.bark();
+// ---------------------------------------------------------------
