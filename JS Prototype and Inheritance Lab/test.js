@@ -3,13 +3,18 @@ let person = {
     age: 20,
 }
 
-let test = Object.getOwnPropertyDescriptors(person);
-for(let el in person) {
-    console.log(el);
-}
-Object.defineProperty(person,'name',{value: 'Gosho',enumerable: false})
-Object.defineProperty(person,'height',{value: 210});
-console.log(JSON.stringify(person));
-for(let el in person) {
-    console.log(el);
-}
+
+Object.defineProperty(person,'height',{value: 210,enumerable: true,writable:true});
+
+Object.defineProperty(person, 'info', {
+    get: function() {
+        return `${this.name} - ${this.height}`
+    },
+    // set: function(tokens) {
+    //     let [name,height] = tokens.split(' ');
+    //     this.name = name;
+    //     this.height = height;
+    // }
+})
+person.info = 'Mako 1.56'
+console.log(person.info);
