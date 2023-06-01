@@ -4,14 +4,14 @@
             if(!this.startsWith(str)) {
                 return str + this;
             } else {
-                return this;
+                return this.toString();
             }
         }
         String.prototype.ensureEnd = function(str) {
             if(!this.endsWith(str)) {
-                return this + str;
+                return this.concat(str);
             } else {
-                return this;
+                return this.toString();
             } 
         }
         String.prototype.isEmpty = function() {
@@ -35,6 +35,7 @@
             for(let i = 0; i < params.length; i++) {
                 string = string.replace(`{${i}}`, params[i]);
             }
+            return string;
         }
     })()
 
