@@ -1,20 +1,19 @@
-function result() {
-
-        let ojb = Object.getPrototypeOf(template);
-        ojb.prototype.extend = function() {
-            return;
+(function solve(){
+    let id = 0;
+  class Extensible {
+        constructor() {
+          this.id = id++;
         }
-    }
-
-    
-
-    var template = {
-        extensionMethod: function () {
-            console.log("From extension method")
-        }
-    };
-    
-    var testObject = result();
-    testObject.extend(template);
-    console.log(Object.getPrototypeOf(testObject).hasOwnProperty('extensionMethod'));
-// expect(Object.getPrototypeOf(testObject).hasOwnProperty('extensionMethod')).to.equal(true, "Object's prototype was not extended");
+        extend(template) {
+            for (let prop in template) {
+              if (typeof template[prop] == 'function')
+                 Extensible.prototype[prop] = template[prop];
+              else
+                 this[prop] = template[prop];
+            }
+          }
+          
+  }
+   
+return Extensible;
+})()
