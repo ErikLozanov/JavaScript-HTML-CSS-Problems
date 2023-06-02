@@ -38,7 +38,6 @@ function solution() {
     constructor(name, age) {
         super(name, age);
         this.tasks = [
-            `${this.name} is supervising junior workers.`,
           `${this.name} scheduled a meeting.`,
           `${this.name} is preparing a quarterly report.`,
         ];
