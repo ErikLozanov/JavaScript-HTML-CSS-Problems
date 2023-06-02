@@ -1,19 +1,14 @@
-(function solve(){
-    let id = 0;
-  class Extensible {
-        constructor() {
-          this.id = id++;
+function extensibleObject() {
+  function ExtensibleObject() {
+    ExtensibleObject.prototype.extend = function(template) {
+      Object.entries(template).forEach(([key,value])=> {
+        if(value instanceof Function) {
+          Object.getPrototypeOf(this)[key] = value;
+        } else {
+          this[key] = value;
         }
-        extend(template) {
-            for (let prop in template) {
-              if (typeof template[prop] == 'function')
-                 Extensible.prototype[prop] = template[prop];
-              else
-                 this[prop] = template[prop];
-            }
-          }
-          
+      });
+    }
   }
-   
-return Extensible;
-})()
+  return new ExtensibleObject
+}
