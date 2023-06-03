@@ -112,7 +112,7 @@ function solve() {
 
 
             backBtn.addEventListener('click', function(){
-                window.location.reload()
+                window.location.reload();
             })
         })
         cancelBtn.addEventListener('click', function(){
