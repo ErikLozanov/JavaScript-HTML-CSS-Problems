@@ -1,9 +1,9 @@
 class RefurbishedSmartphones{
-        constructor(retailer = '',availableSmartphones = [],soldSmartphones = [],revenue = 0) {
+        constructor(retailer) {
             this.retailer = retailer;
-            this.availableSmartphones = availableSmartphones;
-            this.soldSmartphones = soldSmartphones;
-            this.revenue = revenue;
+            this.availableSmartphones = [];
+            this.soldSmartphones = [];
+            this.revenue = 0;
         }
         addSmartphone(model,storage,price,condition) {
             if(model == '' || storage < 0 || price < 0 || condition == '') {
@@ -16,6 +16,7 @@ class RefurbishedSmartphones{
         }
 
         sellSmartphone(model, desiredStorage) {
+            let soldPrice = 0;
             let isFound = this.availableSmartphones.find(x=> x.model === model);
       
                 if(!isFound) {
@@ -25,11 +26,11 @@ class RefurbishedSmartphones{
 
                     }
                     else if(Math.abs(isFound.storage - desiredStorage) <= 128) {
-                        isFound.price = isFound.price * 0.9;
+                        soldPrice = isFound.price * 0.9;
                     } else if(Math.abs(isFound.storage - desiredStorage) > 128) {
-                        isFound.price = isFound.price * 0.8;
+                        soldPrice = isFound.price * 0.8;
                     }
-                    this.soldSmartphones.push({model: isFound.model, storage: isFound.storage, soldPrice: isFound.price});
+                    this.soldSmartphones.push({model: isFound.model, storage: isFound.storage, soldPrice});
                     this.availableSmartphones.filter(x => x.model != model);
                     this.revenue += isFound.price;
                     return `${model} was sold for ${(isFound.price).toFixed(2)}$`
