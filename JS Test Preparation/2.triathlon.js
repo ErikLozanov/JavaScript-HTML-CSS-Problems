@@ -74,6 +74,7 @@ console.log(contest.addParticipant("Sasha", "male"));
 console.log(contest.rewarding("Peter"));
 console.log(contest.rewarding("Sasha"));
 console.log(contest.showRecord("all"));
+console.log(contest.showRecord("all"));
 
 
 
