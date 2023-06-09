@@ -60,5 +60,23 @@ function solve() {
       postCategoryEl.value = postCategory;
       postContentEl.value = postContent;
     })
+    
+    let ulPublished = document.getElementById('published-list');
+    approveBtn.addEventListener('click', ()=>{
+
+      li.querySelector('button').remove();
+      li.querySelector('button').remove();
+      ulPublished.appendChild(li);
+    })
+
+    let clearBtn = document.getElementById('clear-btn');
+
+    clearBtn.addEventListener('click',()=>{
+      for(let el of ulPublished.getElementsByTagName('li')) {
+        el.remove();
+      }
+    })
   });
+
+
 }
