@@ -51,5 +51,14 @@ function solve() {
     postTitleEl.value = '';
     postCategoryEl.value = '';
     postContentEl.value = '';
+
+
+    editBtn.addEventListener('click',()=>{
+      li.remove();
+
+      postTitleEl.value = postTitle;
+      postCategoryEl.value = postCategory;
+      postContentEl.value = postContent;
+    })
   });
 }
