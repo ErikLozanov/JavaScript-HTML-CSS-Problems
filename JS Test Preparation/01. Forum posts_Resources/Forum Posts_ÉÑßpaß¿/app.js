@@ -13,9 +13,9 @@ function solve() {
     let postContent = postContentEl.value;
 
     if (
-      postTitleEl == "" ||
-      postCategoryEl == "" ||
-      postContentEl == ""
+      postTitle == "" ||
+      postCategory == "" ||
+      postContent == ""
     ) {
     return
     }
@@ -30,7 +30,7 @@ function solve() {
     let pCategory = document.createElement('p');
     pCategory.textContent = `Category: ${postCategory}`
     let pContent = document.createElement('p');
-    pContent.textContent = `Content ${postContent}`;
+    pContent.textContent = `Content: ${postContent}`;
 
     let editBtn = document.createElement('button');
     editBtn.classList.add('action-btn','edit');
