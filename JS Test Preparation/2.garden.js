@@ -60,7 +60,7 @@ class Garden {
         } else {
             let storageArr = [];
             this.storage.forEach(x=> storageArr.push(`${x.plantName} (${x.quantity})`));
-            result.push(`Plants in the storage: ${storageArr.join(', ')}`);
+            result.push(`Plants in storage: ${storageArr.join(', ')}`);
         }
         return result.join('\n');
     }
@@ -90,3 +90,8 @@ console.log(myGarden.generateReport());
 
 
 
+Unexpected error: expected 'The garden has 220 free space left.\n
+Plants in the garden: apple, raspberry\n
+Plants in the storage: orange (1)' to equal 'The garden has 220 free space left.\n
+Plants in the garden: apple, raspberry\n
+Plants in storage: orange (1)'
