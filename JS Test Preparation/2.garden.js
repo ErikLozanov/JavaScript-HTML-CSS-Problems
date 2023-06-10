@@ -89,9 +89,3 @@ console.log(myGarden.generateReport());
 
 
 
-
-Unexpected error: expected 'The garden has 220 free space left.\n
-Plants in the garden: apple, raspberry\n
-Plants in the storage: orange (1)' to equal 'The garden has 220 free space left.\n
-Plants in the garden: apple, raspberry\n
-Plants in storage: orange (1)'
