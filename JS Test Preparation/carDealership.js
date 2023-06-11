@@ -44,18 +44,18 @@ class CarDealership {
     }
     salesReport(criteria) {
         if(criteria == 'horsepower') {
-        this.soldCars.sort((a,b)=> b.criteria - a.criteria);
+        this.soldCars.sort((a,b)=> b.horsepower - a.horsepower);
 
         } else if (criteria == 'model')  {
-            this.soldCars.sort((a,b)=> ab.criteria.localeCompare(b.criteria));
+            this.soldCars.sort((a,b)=> a.model.localeCompare(b.model));
         } else {
             throw new Error('Invalid criteria!');
         }
         let result = [];
 
-        result.push(`-${this.name} has a total income of ${this.totalIncome}$`);
+        result.push(`-${this.name} has a total income of ${this.totalIncome.toFixed(2)}$`);
         result.push(`-${this.soldCars.length} cars sold:`);
-        this.soldCars.forEach(x=> result.push(`---${x.model} - ${x.horsepower} HP - ${x.price}$`));
+        this.soldCars.forEach(x=> result.push(`---${x.model} - ${x.horsepower} HP - ${x.soldPrice.toFixed(2)}$`));
         return result.join('\n');
     }
 }
@@ -64,6 +64,9 @@ let dealership = new CarDealership('SoftAuto');
 dealership.addCar('Toyota Corolla', 100, 3500, 190000);
 dealership.addCar('Mercedes C63', 300, 29000, 187000);
 dealership.addCar('Audi A3', 120, 4900, 240000);
-console.log(dealership.currentCar());
+dealership.sellCar('Toyota Corolla', 230000);
+dealership.sellCar('Mercedes C63', 110000);
+console.log(dealership.salesReport('horsepower'));
+
 
 
