@@ -13,9 +13,57 @@ class CarDealership {
         this.availableCars.push({model,horsepower,price,mileage});
         return `New car added: ${model} - ${horsepower} HP - ${mileage.toFixed(2)} km - ${price.toFixed(2)}$`;
     }
+    sellCar(model,desiredMileage) {
+        let desiredModelFound = this.availableCars.find(x=> x.model == model);
+
+        if(!desiredModelFound) {
+            throw new Error(`${model} was not found!`);
+        }
+        let mileageDifference = desiredModelFound.mileage - desiredMileage;
+        if(desiredModelFound.mileage <= desiredMileage) {
+
+        } else if(mileageDifference <= 40000) {
+            desiredModelFound.price *= 0.95;
+        } else if(mileageDifference > 40000) {
+            desiredModelFound.price *= 0.9;
+        }
+        let soldCar = this.availableCars.filter(x=> x.model == model);
+        this.soldCars.push({model, horsepower:desiredModelFound.horsepower, soldPrice: desiredModelFound.price });
+        this.totalIncome += desiredModelFound.price;
+        return `${model} was sold for ${(desiredModelFound.price).toFixed(2)}$`;
+    }
+    currentCar() {
+
+        if(this.availableCars.length == 0) {
+            return 'There are no available cars';
+        }
+        let result = [];
+        result.push('-Available cars:');
+        this.availableCars.forEach(x=> result.push(`---${x.model} - ${x.horsepower} HP - ${x.mileage.toFixed(2)} km - ${x.price.toFixed(2)}$`));
+        return result.join('\n');
+    }
+    salesReport(criteria) {
+        if(criteria == 'horsepower') {
+        this.soldCars.sort((a,b)=> b.criteria - a.criteria);
+
+        } else if (criteria == 'model')  {
+            this.soldCars.sort((a,b)=> ab.criteria.localeCompare(b.criteria));
+        } else {
+            throw new Error('Invalid criteria!');
+        }
+        let result = [];
+
+        result.push(`-${this.name} has a total income of ${this.totalIncome}$`);
+        result.push(`-${this.soldCars.length} cars sold:`);
+        this.soldCars.forEach(x=> result.push(`---${x.model} - ${x.horsepower} HP - ${x.price}$`));
+        return result.join('\n');
+    }
 }
 
 let dealership = new CarDealership('SoftAuto');
-console.log(dealership.addCar('Toyota Corolla', 100, 3500, 190000));
-console.log(dealership.addCar('Mercedes C63', 300, 29000, 187000));
-console.log(dealership.addCar('', 120, 4900, 240000));
+dealership.addCar('Toyota Corolla', 100, 3500, 190000);
+dealership.addCar('Mercedes C63', 300, 29000, 187000);
+dealership.addCar('Audi A3', 120, 4900, 240000);
+console.log(dealership.currentCar());
+
+
