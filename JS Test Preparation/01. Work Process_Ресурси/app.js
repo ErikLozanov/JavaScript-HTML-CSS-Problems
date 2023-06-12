@@ -89,6 +89,11 @@ function solve() {
 
         budgetSalary.textContent = (Number(budgetSalary.textContent) - Number(salary)).toFixed(2);
     })
+
+    firedBtn.addEventListener('click',()=>{
+        tr.remove();
+        budgetSalary.textContent = (Number(budgetSalary.textContent) - Number(salary)).toFixed(2);
+    })
   });
 }
 solve();
