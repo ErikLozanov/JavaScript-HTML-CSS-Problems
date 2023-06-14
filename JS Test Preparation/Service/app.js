@@ -64,9 +64,9 @@ function solve() {
 
         let clearBtn = document.querySelector('.clear-btn');
         clearBtn.addEventListener('click',()=>{
-        let divs =  completedOrders.querySelectorAll('div');
-
-            divs.forEach(x=> x.remove());
+        let divs =  completedOrders.querySelectorAll('#completed-orders>.container');
+        divs.forEach(x=> x.remove());
+        console.log(divs.length);
         })
     })
 }
