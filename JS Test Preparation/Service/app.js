@@ -46,6 +46,9 @@ function solve() {
         let receivedOrdersEl = document.getElementById('received-orders');
         receivedOrdersEl.appendChild(div);
 
+        descriptionTypeEl.value = '';
+        clientNameEl.value = '';
+        clientPhoneEl.value = '';
 
 
         let completedOrders = document.getElementById('completed-orders');
@@ -62,11 +65,15 @@ function solve() {
             })
         })
 
-        let clearBtn = document.querySelector('.clear-btn');
-        clearBtn.addEventListener('click',()=>{
-        let divs =  completedOrders.querySelectorAll('#completed-orders>.container');
-        divs.forEach(x=> x.remove());
-        console.log(divs.length);
-        })
+    })
+    let clearBtn = document.querySelector('.clear-btn');
+    clearBtn.addEventListener('click',()=>{
+    let divs =  document.querySelectorAll('#completed-orders>.container');
+
+    for(let el of divs) {
+        el.remove();
+        
+    }
+    // console.log(divs.length);
     })
 }
