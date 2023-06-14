@@ -36,5 +36,37 @@ function solve() {
         finishBtn.classList.add('finish-btn');
         finishBtn.textContent = 'Finish repair';
         finishBtn.disabled = true;
+
+        div.appendChild(h2ProductType);
+        div.appendChild(h3ClientInformation);
+        div.appendChild(h4Description);
+        div.appendChild(startBtn);
+        div.appendChild(finishBtn);
+
+        let receivedOrdersEl = document.getElementById('received-orders');
+        receivedOrdersEl.appendChild(div);
+
+
+
+        let completedOrders = document.getElementById('completed-orders');
+        startBtn.addEventListener('click',()=>{
+            startBtn.disabled = true;
+
+            finishBtn.disabled = false;
+
+            finishBtn.addEventListener('click',()=>{
+                completedOrders.appendChild(div);
+
+                div.querySelector('button').remove();
+                div.querySelector('button').remove();
+            })
+        })
+
+        let clearBtn = document.querySelector('.clear-btn');
+        clearBtn.addEventListener('click',()=>{
+        let divs =  completedOrders.querySelectorAll('div');
+
+            divs.forEach(x=> x.remove());
+        })
     })
 }
