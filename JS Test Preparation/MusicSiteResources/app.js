@@ -61,13 +61,18 @@ function solve() {
         nameOfSongEl.value = '';
         authorEl.value = '';
         dateEl.value = '';
-
+        deleteBtn.addEventListener('click',()=>{
+            hitsInfoDiv.remove();
+        })
 
         likeBtn.addEventListener('click',()=>{
 
             let likesCounter = document.querySelector('.likes p');
-            likesCounter.textContent = `Total Likes: ${+1}`;
-
+            let currentLikes = likesCounter.textContent.split(': ');
+            currentLikes[1] = Number(currentLikes[1]);
+            let currLikes = currentLikes[1];
+            likesCounter.textContent = `Total Likes: ${currLikes+=1}`;
+            debugger
             likeBtn.disabled = true;
         })
         saveBtn.addEventListener('click',()=>{
@@ -83,6 +88,10 @@ function solve() {
             deleteBtn.classList.add('delete-btn');
 
             hitsInfoDiv.appendChild(deleteBtn);
+
+            deleteBtn.addEventListener('click',()=>{
+                hitsInfoDiv.remove();
+            })
         })
     })
 }
