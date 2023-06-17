@@ -58,15 +58,31 @@ class JobOffers {
         }
         return `${name} will sign a contract for ${this.employer}, as ${this.position} with a salary of $40,000 per year!`;
     }
+    candidatesDatabase() {
+        if(this.jobCandidates.length == 0) {
+            throw new Error("Candidate Database is empty!");
+        }
+        let result = [];
+        result.push('Candidates list:');
+
+        this.jobCandidates.sort((a,b)=>a.name.localeCompare(b.name));
+
+        this.jobCandidates.forEach(x=> result.push(`${x.name}-${x.yearsExp}`));
+
+        return result.join('\n');
+    }
 }
 
 
 let Jobs = new JobOffers ("Google", "Strategy Analyst");
- console.log(Jobs.jobApplication(["John Doe-Bachelor-10", "Peter Parker-Master-5", "Daniel Jones- Bachelor-18"]));
- console.log(Jobs.jobOffer("John Doe-8"));
- console.log(Jobs.jobOffer("Peter Parker-4"));
- console.log(Jobs.salaryBonus("John Doe"));
- console.log(Jobs.salaryBonus("Peter Parker"));
+console.log(Jobs.jobApplication(["John Doe-Bachelor-10", "Peter Parker-Master-5","Jordan Cole-High School-5", "Daniel Jones- Bachelor-18"]));
+console.log(Jobs.jobOffer("John Doe-8"));
+console.log(Jobs.jobOffer("Peter Parker-4"));
+console.log(Jobs.jobOffer("Jordan Cole-4"));
+console.log(Jobs.salaryBonus("Jordan Cole"));
+console.log(Jobs.salaryBonus("John Doe"));
+console.log(Jobs.candidatesDatabase());
+
 
 
 
