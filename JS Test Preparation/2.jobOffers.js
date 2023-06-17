@@ -24,7 +24,7 @@ class JobOffers {
         }
         let addedPersons = [];
         this.jobCandidates.forEach(x=> addedPersons.push(x.name));
-        return `You successfully added candidates: ${addedPersons.join(', ')}`;
+        return `You successfully added candidates: ${addedPersons.join(', ')}.`;
     }
     jobOffer(chosenPerson) {
         let [name,minExp] = chosenPerson.split('-');
