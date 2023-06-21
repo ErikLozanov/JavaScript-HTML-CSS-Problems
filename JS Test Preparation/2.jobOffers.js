@@ -81,6 +81,7 @@ console.log(Jobs.jobOffer("Peter Parker-4"));
 console.log(Jobs.jobOffer("Jordan Cole-4"));
 console.log(Jobs.salaryBonus("Jordan Cole"));
 console.log(Jobs.salaryBonus("John Doe"));
+console.log(Jobs.salaryBonus("John Doe"));
 console.log(Jobs.candidatesDatabase());
 
 
