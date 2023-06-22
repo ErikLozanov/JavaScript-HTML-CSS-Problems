@@ -7,20 +7,44 @@ function loadRepos() {
    // .then(response => response.json())
    // .then(data => extraction.textContent = data);
 
-   const request = fetch(url);
+   // ----------------------------------------------------------
 
-   request.then(requestHandler);
+   // const request = fetch(url);
 
-   function requestHandler(response) {
-      console.log('received headers');
-      const dataPromise = response.json();
-      dataPromise.then(dataHandler);
+   // request.then(requestHandler);
+
+   // function requestHandler(response) {
+   //    console.log('received headers');
+   //    const dataPromise = response.json();
+   //    dataPromise.then(dataHandler);
+   // }
+
+   // function dataHandler(data) {
+   //    console.log('received data');
+   //    extraction.textContent = JSON.stringify(data);
+   // }
+
+   // ----------------------------------------------------------
+   const data = {
+      name: 'Stoqn Zlatniq',
+      age: 24
    }
-
-   function dataHandler(data) {
-      console.log('received data');
-      extraction.textContent = JSON.stringify(data);
-   }
+   fetch('https://swapi.dev/api/people')
+   // ,{
+   //    method: 'POST',
+   //    headers: {
+   //       'Content-Type': 'application/json'
+   //    },
+   //    body: JSON.stringify(data)
+   // }
+   .then(response => response.json())
+   .then(data => {
+      console.log(data);
+      return data.results
+   })
+   .then(result=> {
+      extraction.textContent = result[0].name
+   })
 }
 
 
