@@ -77,10 +77,17 @@ async function solve() {
 
 
     function moreInfo(e) {
-        // e.currentTarget.style.display = 'none';
+
+        if(e.currentTarget.querySelector('.small').classList.contains('hide')) {
+
+            e.currentTarget.querySelector('.small').classList.remove('hide');
+            e.currentTarget.querySelector('.title').classList.remove('hide');
+            e.currentTarget.querySelector('article').classList.add('hide')
+        } else {
         e.currentTarget.querySelector('.small').classList.add('hide');
         e.currentTarget.querySelector('.title').classList.add('hide');
         e.currentTarget.querySelector('article').classList.remove('hide')
+    }
     }
 
 
