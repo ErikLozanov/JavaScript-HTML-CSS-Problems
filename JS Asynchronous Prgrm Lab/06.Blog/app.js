@@ -26,7 +26,7 @@ function attachEvents() {
         // console.log(dataUrl.body);
         postTitle.textContent = selectPostsEl.options[selectPostsEl.selectedIndex].text;
         postBody.textContent = dataUrl.body;
-        let commentsUrl = `http://localhost:3030/jsonstore/blog/comments`;
+        let commentsUrl = `http://localhost:3030/jsonstore/blog/comments/${selectPostsEl.value}`;
 
         let response = await fetch(commentsUrl);
         let data = await response.json();
