@@ -10,7 +10,7 @@ function attachEvents() {
         let postsUrl = 'http://localhost:3030/jsonstore/blog/posts';
         let postResponse = await fetch(postsUrl);
         let postsData = await postResponse.json();
-
+        selectPostsEl.innerHTML = '';
         for(let post of Object.values(postsData)) {
             // console.log(post);
             let option = elFactory('option',post.id, post.title);
@@ -26,8 +26,9 @@ function attachEvents() {
         // console.log(dataUrl.body);
         postTitle.textContent = selectPostsEl.options[selectPostsEl.selectedIndex].text;
         postBody.textContent = dataUrl.body;
-        let commentsUrl = `http://localhost:3030/jsonstore/blog/comments/${selectPostsEl.value}`;
+        let commentsUrl = `http://localhost:3030/jsonstore/blog/comments`;
 
+        // debugger
         let response = await fetch(commentsUrl);
         let data = await response.json();
         console.log(selectPostsEl.value);
