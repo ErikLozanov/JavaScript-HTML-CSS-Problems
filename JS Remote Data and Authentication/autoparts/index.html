@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, tr, th, td {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        td, th {
+            padding: 4px 8px;
+        }
+    </style>
+</head>
+<body>
+    <section id="index">
+        <h2>Part index</h2>
+        <table >
+        <thead>
+            <tr>
+                <th>Part</th>
+                <th>Label</th>
+                <th>Unit Price</th>
+                <th>Available Quantity</th>
+                <th>Control</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+    </section> 
+    <section id="edit">
+        <h2>Part Editor</h2>
+        <div>
+            <span>Label</span>
+            <input type="text" id="part_label">
+        </div>
+        <div>
+            <span>Unit Price</span>
+            <input type="number" id="part_price">
+        </div>
+        <div>
+            <span>Quantity</span>
+            <input type="number" id="qty">
+        </div>
+
+        <div>
+            <button id="create-btn">Create Part</button>
+            <button id="load-btn">Load Parts</button>
+        </div>
+
+    </section>
+
+
+    <script src="app.js"></script>
+    
+</body>
+</html>
