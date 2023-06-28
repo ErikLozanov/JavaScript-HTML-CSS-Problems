@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landmarks</title>
+    <style>
+        table,td,th  {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+        #loadBtn {
+            margin-top: 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+    </style>
+  </head>
+  <body>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Area</th>
+            <th>Date Started</th>
+            <th>Date Ended</th>
+            <th>Controls</th>
+          </tr>
+        </thead>
+        <tbody id="body">
+        </tbody>
+    </table>
+    <button id="loadBtn">Load Landmarks</button>
+      <form>
+        <div>
+          <label for="name">Name</label> <input id="name" type="text" />
+        </div>
+        <div>
+          <label for="area">Area</label> <input id="area" type="text" />
+        </div>
+        <div>
+          <label for="dateStart">Date Started</label>
+          <input id="dateStart" type="text" />
+        </div>
+        <div>
+          <label for="dateEnd">Date Ended</label>
+          <input id="dateEnd" type="text" />
+        </div>
+
+        <button id="createBtn">Create</button>
+      </form>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
