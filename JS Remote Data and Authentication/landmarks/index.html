@@ -34,7 +34,8 @@
         </tbody>
     </table>
     <button id="loadBtn">Load Landmarks</button>
-      <form>
+      <form id="create">
+        <h2>Create Landmark</h2>
         <div>
           <label for="name">Name</label> <input id="name" type="text" />
         </div>
@@ -51,6 +52,27 @@
         </div>
 
         <button id="createBtn">Create</button>
+      </form>
+      <form id="Edit">
+        <h2>Edit Landmark</h2>
+
+        <input id="editId" type="hidden">
+        <div>
+          <label for="name">Name</label> <input id="edit-name" type="text" />
+        </div>
+        <div>
+          <label for="area">Area</label> <input id="edit-area" type="text" />
+        </div>
+        <div>
+          <label for="edit-dateStart">Date Started</label>
+          <input id="edit-dateStart" type="text" />
+        </div>
+        <div>
+          <label for="edit-dateEnd">Date Ended</label>
+          <input id="edit-dateEnd" type="text" />
+        </div>
+
+        <button id="editBtn">Edit</button>
       </form>
     </main>
 

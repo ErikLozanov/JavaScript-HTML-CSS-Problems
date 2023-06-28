@@ -3,7 +3,7 @@ createBtn.addEventListener('click',addLandMark);
 let loadBtn = document.getElementById('loadBtn');
 loadBtn.addEventListener('click', loadLandMarks);
 let tbody = document.getElementById('body');
-
+let editBtn = document.getElementById('editBtn');
 async function loadLandMarks() {
     [...tbody.children].forEach(x=>x.remove());
     let url = 'http://localhost:3030/jsonstore/landmarks';
@@ -18,38 +18,10 @@ async function loadLandMarks() {
     })
 }
 
-function createLandMark(id,name,area,dateStart,dateEnd) {
-
-    let tr = document.createElement('tr');
-
-    let tdName = document.createElement('td');
-    tdName.textContent = name;
-    let tdArea = document.createElement('td');
-    tdArea.textContent = area;
-    let tdDateStart = document.createElement('td');
-    tdDateStart.textContent = dateStart;
-    let tdDateEnd = document.createElement('td');
-    tdDateEnd.textContent = dateEnd;
-    let tdDelete = document.createElement('td');
-    let delBtn = document.createElement('button');
-    delBtn.textContent = 'Delete';
-    delBtn.dataset.id = id;
-    tdDelete.appendChild(delBtn);
-    delBtn.addEventListener('click',deleteLandMark);
-
-    tr.appendChild(tdName);
-    tr.appendChild(tdArea);
-    tr.appendChild(tdDateStart);
-    tr.appendChild(tdDateEnd);
-    tr.appendChild(tdDelete);
-    return tr;
-}
-
 async function deleteLandMark(e) {
     let selected = e.target;
     let selectedId = selected.dataset.id;
-    console.log(selectedId);
-    console.log(selected);
+
     let url = `http://localhost:3030/jsonstore/landmarks/${selectedId}`;
 
     let settings = {
@@ -59,8 +31,31 @@ async function deleteLandMark(e) {
     let response = await fetch(url,settings);
     let data = await response.json();
 
-    loadLandMarks();
+   await loadLandMarks();
 }
+
+async function loadEdit(e) {
+    let selected = e.target;
+    let selectedId = selected.dataset.id;
+
+    let url = `http://localhost:3030/jsonstore/landmarks/${selectedId}`;
+
+    let response = await fetch(url);
+    let result = await response.json();
+
+    let inputId = document.getElementById('editId');
+    let name = document.getElementById('edit-name');
+    let area = document.getElementById('edit-area');
+    let dateStart = document.getElementById('edit-dateStart');
+    let dateEnd = document.getElementById('edit-dateEnd');
+
+    inputId.value = result._id;
+    name.value = result.name;
+    area.value = result.area;
+    dateStart.value = result.dateStart;
+    dateEnd.value = result.dateEnd;
+}
+
 
 
 async function addLandMark(e) {
@@ -84,6 +79,38 @@ async function addLandMark(e) {
 
     console.log(data);
 
-    loadLandMarks();
+   await loadLandMarks();
+}
 
+function createLandMark(id,name,area,dateStart,dateEnd) {
+
+    let tr = document.createElement('tr');
+
+    let tdName = document.createElement('td');
+    tdName.textContent = name;
+    let tdArea = document.createElement('td');
+    tdArea.textContent = area;
+    let tdDateStart = document.createElement('td');
+    tdDateStart.textContent = dateStart;
+    let tdDateEnd = document.createElement('td');
+    tdDateEnd.textContent = dateEnd;
+    let tdDelete = document.createElement('td');
+    let delBtn = document.createElement('button');
+    delBtn.textContent = 'Delete';
+    delBtn.dataset.id = id;
+    tdDelete.appendChild(delBtn);
+    delBtn.addEventListener('click',deleteLandMark);
+
+    let editBtn = document.createElement('button');
+    editBtn.textContent = 'Edit';
+    editBtn.dataset.id = id;
+    tdDelete.appendChild(editBtn);
+    editBtn.addEventListener('click',loadEdit);
+
+    tr.appendChild(tdName);
+    tr.appendChild(tdArea);
+    tr.appendChild(tdDateStart);
+    tr.appendChild(tdDateEnd);
+    tr.appendChild(tdDelete);
+    return tr;
 }
