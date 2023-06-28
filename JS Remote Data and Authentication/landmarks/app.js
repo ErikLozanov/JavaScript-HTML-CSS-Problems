@@ -62,12 +62,20 @@ async function loadEdit(e) {
 async function editLandMark(e) {
     e.preventDefault();
 
+    let _idEl = document.getElementById('editId');
+    let nameEl = document.getElementById('edit-name');
+    let areaEl = document.getElementById('edit-area');
+    let dateStartEl = document.getElementById('edit-dateStart');
+    let dateEndEl = document.getElementById('edit-dateEnd');
+
+
     let _id = document.getElementById('editId').value;
     let name = document.getElementById('edit-name').value;
     let area = document.getElementById('edit-area').value;
     let dateStart = document.getElementById('edit-dateStart').value;
     let dateEnd = document.getElementById('edit-dateEnd').value;
 
+    
 
     let url = `http://localhost:3030/jsonstore/landmarks/${_id}`;
 
@@ -81,17 +89,22 @@ async function editLandMark(e) {
 
     let data = await response.json();
 
-    // inputId = '';
-    // name = '';
-    // area = '';
-    // dateStart = '';
-    // dateEnd = '';
+    _idEl.value = '';
+    nameEl.value = '';
+    areaEl.value = '';
+    dateStartEl.value = '';
+    dateEndEl.value = '';
 
     await loadLandMarks();
 }
 
 async function addLandMark(e) {
     e.preventDefault();
+    let nameEl = document.getElementById('name');
+    let areaEl = document.getElementById('area');
+    let dateStartEl = document.getElementById('dateStart');
+    let dateEndEl = document.getElementById('dateEnd');
+
     let name = document.getElementById('name').value;
     let area = document.getElementById('area').value;
     let dateStart = document.getElementById('dateStart').value;
@@ -109,7 +122,10 @@ async function addLandMark(e) {
 
     let data = await response.json();
 
-    console.log(data);
+    nameEl.value = '';
+    areaEl.value = '';
+    dateStartEl.value = '';
+    dateEndEl.value = '';
 
    await loadLandMarks();
 }
