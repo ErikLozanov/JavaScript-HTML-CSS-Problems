@@ -5,7 +5,7 @@ async function loadStudents() {
     let url = 'http://localhost:3030/jsonstore/collections/students';
     let tbody = document.querySelector('#results tbody');
     let response = await fetch(url);
-
+    tbody.innerHTML = '';
     let result = await response.json();
 
     Object.values(result).forEach(x=> {
@@ -35,4 +35,28 @@ function createRows(firstName,lastName,facultyNum,grade) {
 
 let form = document.getElementById('form');
 
-form.addEventListener('submit',addStudents())
+form.addEventListener('submit',addStudent);
+
+
+async function addStudent(e) {
+    e.preventDefault();
+    let formData = new FormData(form);
+
+    let url = 'http://localhost:3030/jsonstore/collections/students';
+    let body = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        facultyNumber: formData.get('facultyNumber'),
+        grade: formData.get('grade')
+    }
+
+    let settings = {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body),
+    }
+
+    let response = await fetch(url,settings);
+
+    await loadStudents();
+}
