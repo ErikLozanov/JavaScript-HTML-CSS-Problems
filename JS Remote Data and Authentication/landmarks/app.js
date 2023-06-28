@@ -44,6 +44,7 @@ async function loadEdit(e) {
 
     let response = await fetch(url);
     let result = await response.json();
+    
 
     let inputId = document.getElementById('editId');
     let name = document.getElementById('edit-name');
@@ -61,24 +62,30 @@ async function loadEdit(e) {
 async function editLandMark(e) {
     e.preventDefault();
 
-    let inputId = document.getElementById('editId').value;
+    let _id = document.getElementById('editId').value;
     let name = document.getElementById('edit-name').value;
     let area = document.getElementById('edit-area').value;
     let dateStart = document.getElementById('edit-dateStart').value;
     let dateEnd = document.getElementById('edit-dateEnd').value;
 
 
-    let url = `http://localhost:3030/jsonstore/landmarks/${inputId}`;
+    let url = `http://localhost:3030/jsonstore/landmarks/${_id}`;
 
     let settings = {
         method: 'put',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name,area,dateStart,dateEnd}),
+        body: JSON.stringify({_id,name,area,dateStart,dateEnd}),
     }
 
     let response = await fetch(url,settings);
 
     let data = await response.json();
+
+    // inputId = '';
+    // name = '';
+    // area = '';
+    // dateStart = '';
+    // dateEnd = '';
 
     await loadLandMarks();
 }
