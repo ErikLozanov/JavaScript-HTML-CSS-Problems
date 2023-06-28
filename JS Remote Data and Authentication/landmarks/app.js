@@ -1,5 +1,5 @@
-let createBtn = document.getElementById('createBtn');
-createBtn.addEventListener('click',addLandMark);
+let createForm = document.getElementById('create');
+createForm.addEventListener('submit', addLandMark);
 let loadBtn = document.getElementById('loadBtn');
 loadBtn.addEventListener('click', loadLandMarks);
 let tbody = document.getElementById('body');
@@ -100,32 +100,30 @@ async function editLandMark(e) {
 
 async function addLandMark(e) {
     e.preventDefault();
-    let nameEl = document.getElementById('name');
-    let areaEl = document.getElementById('area');
-    let dateStartEl = document.getElementById('dateStart');
-    let dateEndEl = document.getElementById('dateEnd');
-
-    let name = document.getElementById('name').value;
-    let area = document.getElementById('area').value;
-    let dateStart = document.getElementById('dateStart').value;
-    let dateEnd = document.getElementById('dateEnd').value;
-
+    let target = e.target;
+    let formData = new FormData(target);
+    // let landmark = Object.fromEntries(formData.entries());
+    let landmark = {
+        name: formData.get('name'),
+        area: formData.get('area'),
+        dateStart: formData.get('dateStart'),
+        dateEnd: formData.get('dateEnd')
+    }
+    console.log(formData.get('area'));
     let url = 'http://localhost:3030/jsonstore/landmarks';
 
     let settings = {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name,area,dateStart,dateEnd}),
+        body: JSON.stringify(landmark),
+        // body: JSON.stringify({name: landmark.name,area: landmark.area,dateStart: landmark.dateStart, dateEnd: landmark.dateEnd}),
     }
 
     let response = await fetch(url,settings);
 
     let data = await response.json();
 
-    nameEl.value = '';
-    areaEl.value = '';
-    dateStartEl.value = '';
-    dateEndEl.value = '';
+
 
    await loadLandMarks();
 }
