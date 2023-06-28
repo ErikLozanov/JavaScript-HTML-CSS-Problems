@@ -4,6 +4,8 @@ let loadBtn = document.getElementById('loadBtn');
 loadBtn.addEventListener('click', loadLandMarks);
 let tbody = document.getElementById('body');
 let editBtn = document.getElementById('editBtn');
+editBtn.addEventListener('click',editLandMark);
+
 async function loadLandMarks() {
     [...tbody.children].forEach(x=>x.remove());
     let url = 'http://localhost:3030/jsonstore/landmarks';
@@ -56,7 +58,30 @@ async function loadEdit(e) {
     dateEnd.value = result.dateEnd;
 }
 
+async function editLandMark(e) {
+    e.preventDefault();
 
+    let inputId = document.getElementById('editId').value;
+    let name = document.getElementById('edit-name').value;
+    let area = document.getElementById('edit-area').value;
+    let dateStart = document.getElementById('edit-dateStart').value;
+    let dateEnd = document.getElementById('edit-dateEnd').value;
+
+
+    let url = `http://localhost:3030/jsonstore/landmarks/${inputId}`;
+
+    let settings = {
+        method: 'put',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({name,area,dateStart,dateEnd}),
+    }
+
+    let response = await fetch(url,settings);
+
+    let data = await response.json();
+
+    await loadLandMarks();
+}
 
 async function addLandMark(e) {
     e.preventDefault();
