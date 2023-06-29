@@ -1,5 +1,5 @@
 let logged = localStorage.getItem('userData');
-
+let userData = JSON.parse(logged);
 if(logged) {
     document.getElementById('guest').style.display = 'none';
     document.querySelector('.email span').textContent = JSON.parse(logged).email;
@@ -15,15 +15,94 @@ if(logged) {
     document.querySelector('.load').addEventListener('click', loadAllCatches);
 // Create catch.....
     document.querySelector('#addForm').addEventListener('submit', addCatch);
+// Update catch...
 
+    async function updateInfo(e) {
+        let id = e.target.dataset.id;
+        let currCatch = e.currentTarget.parentElement;
+
+        let angler = currCatch.querySelector('.angler')
+        let weight = currCatch.querySelector('.weight')
+        let species = currCatch.querySelector('.species')
+        let location = currCatch.querySelector('.location')
+        let bait = currCatch.querySelector('.bait')
+        let captureTime = currCatch.querySelector('.captureTime')
+        // console.log(captureTime.value);
+
+        try {
+            let url = `http://localhost:3030/data/catches/${id}`;
+        let body = {
+            angler: angler.value,
+            weight: weight.value,
+            species: species.value,
+            location: location.value,
+            bait: bait.value,
+            captureTime: captureTime.value,
+        }
+
+        if(Object.values(body).some(x=> x == '')) {
+            throw new Error('Please fill in all inputs!');
+        }
+        let settings = {
+            method: 'put',
+            headers: {'Content-Type': 'application/json',
+                      'X-Authorization': userData.token},
+            body: JSON.stringify(body)
+        }
+        // console.log(settings.body);
+        let response = await fetch(url,settings);
+        if(!response.ok) {
+            let error = response.json();
+            throw new Error(error.message);
+        }
+        } catch (error) {
+            alert(error);
+        }
+        
+
+    }
 
     async function addCatch(e) {
         e.preventDefault();
 
-        if(!logged) {
-            window.location = './login.html';
-            return;
+        let formData = new FormData(e.target);
+
+        let url = 'http://localhost:3030/data/catches';
+        
+        let body = Object.fromEntries(formData);
+
+        try {
+            let data = {
+                angler: body.angler,
+                weight: Number(body.weight),
+                species: body.species,
+                location: body.location,
+                bait: body.bait,
+                captureTime: Number(body.captureTime),
+            }
+            let settings = {
+                method: 'post',
+                headers: {'Content-Type': 'application/json',
+                          'X-Authorization': userData.token},
+                body: JSON.stringify(data)
+            }
+    
+            let response = await fetch(url,settings);
+            console.log(Object.values(data));
+            if(Object.values(data).some(x=> x === '' || x === 0)) {
+                throw new Error('Please fill in all input fields.')
+            }
+            if(!response.ok) {
+                let error = response.json();
+                throw new Error(error.message);
+            }
+            let result = await response.json();
+    
+            console.log(result);
+        } catch (error) {
+            alert(error);
         }
+        loadAllCatches();
     }
 
     async function loadAllCatches(e) {
@@ -77,15 +156,18 @@ if(logged) {
         let updateBtn = document.createElement('button');
         updateBtn.classList.add('update');
         updateBtn.textContent = 'Update';
-        updateBtn.dataset.id = x._ownerId;
+        updateBtn.dataset.id = x._id;
         let deleteBtn = document.createElement('button');
         deleteBtn.classList.add('delete');
         deleteBtn.textContent = 'Delete';
-        deleteBtn.dataset.id = x._ownerId;
+        deleteBtn.dataset.id = x._id;
 
         updateBtn.disabled = isDisabled
         deleteBtn.disabled = isDisabled
 
+        if(!updateBtn.disabled) {
+            updateBtn.addEventListener('click',updateInfo);
+        }
 
         divCatch.appendChild(labelOne);
         divCatch.appendChild(inputOne);
