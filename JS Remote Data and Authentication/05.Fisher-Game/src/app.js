@@ -15,7 +15,24 @@ if(logged) {
     document.querySelector('.load').addEventListener('click', loadAllCatches);
 // Create catch.....
     document.querySelector('#addForm').addEventListener('submit', addCatch);
+    
+    document.getElementById('logout').addEventListener('click', logoutUser);
+    // Logout================================================================================
 
+async function logoutUser() {
+
+    await fetch('http://localhost:3030/users/logout',
+    {
+        headers: {'X-Authorization': userData.token},
+    });
+
+    localStorage.clear();
+    document.querySelector('#logout').style.display = 'none';
+    document.querySelector('.add').disabled = true;
+    document.getElementById('guest').style.display = 'inline-block';
+    window.location = './index.html';
+}
+    // Logout================================================================================
 
 //Delete Catch
     async function deleteCatch(e) {
