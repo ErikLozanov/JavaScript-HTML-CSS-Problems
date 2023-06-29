@@ -6,7 +6,7 @@ form.addEventListener('submit',saveBook);
 
 async function loadBooks() {
     let tbody = document.querySelector('tbody');
-
+    tbody.innerHTML = '';
     let url = 'http://localhost:3030/jsonstore/collections/books';
 
     let response = await fetch(url);
@@ -54,6 +54,7 @@ async function loadEditInfo(e) {
     let submitBtn = document.querySelector('form button');
     submitBtn.style.display = 'none';
     let saveBtn = document.createElement('button');
+    saveBtn.classList.add('saveBtn');
     saveBtn.textContent = 'Save'
     form.appendChild(saveBtn);
     saveBtn.addEventListener('click',editInfo)
@@ -77,7 +78,8 @@ async function loadEditInfo(e) {
     authorEl.value = result.author;
 }
 
-async function editInfo() {
+async function editInfo(e) {
+    e.preventDefault();
     let titleEl = document.querySelector('input[name="title"]');
     let authorEl = document.querySelector('input[name="author"]');
     let id = document.getElementById('editId');
@@ -97,13 +99,34 @@ async function editInfo() {
 
     let response = await fetch(url,settings);
 
-    let result = response.json();
+    // let result = response.json();
 
-    console.log(result);
+    let formTitle = document.querySelector('form h3');
+    formTitle.textContent = 'Edit FORM';
+    let submitBtn = document.querySelector('form button');
+    submitBtn.style.display = 'none';
+
+    document.querySelector('.saveBtn').style.display = 'none';
+    formTitle.textContent = 'FORM';
+    submitBtn.style.display = 'block';
+
+    await loadBooks();
 }
 
 
+async function deleteInfo(e) {
+    let id = e.currentTarget.dataset.id;
+    
+    let url = `http://localhost:3030/jsonstore/collections/books/${id}`;
 
+    let settings = {
+        method: 'delete',
+    }
+
+    let response = await fetch(url,settings);
+
+    loadBooks();
+}
 
 
 
@@ -124,7 +147,7 @@ function createRows(id,author,title) {
     let delBtn = document.createElement('button');
     delBtn.textContent = 'Delete';
     delBtn.dataset.id = id;
-    // delBtn.addEventListener('click', deleteInfo);
+    delBtn.addEventListener('click', deleteInfo);
 
 
     tdButtons.appendChild(editBtn);
