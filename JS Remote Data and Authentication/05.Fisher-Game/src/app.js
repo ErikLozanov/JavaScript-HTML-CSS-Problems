@@ -15,7 +15,26 @@ if(logged) {
     document.querySelector('.load').addEventListener('click', loadAllCatches);
 // Create catch.....
     document.querySelector('#addForm').addEventListener('submit', addCatch);
-// Update catch...
+
+
+//Delete Catch
+    async function deleteCatch(e) {
+        let id = e.target.dataset.id;
+        let currCatch = e.currentTarget.parentElement;
+
+        let url = `http://localhost:3030/data/catches/${id}`;
+
+        let settings = {
+            method: 'Delete',
+            headers: {'X-Authorization': userData.token},
+        }
+
+        let response = await fetch(url,settings);
+
+        loadAllCatches();
+    }
+
+
 
     async function updateInfo(e) {
         let id = e.target.dataset.id;
@@ -59,7 +78,7 @@ if(logged) {
             alert(error);
         }
         
-
+        loadAllCatches();
     }
 
     async function addCatch(e) {
@@ -102,6 +121,7 @@ if(logged) {
         } catch (error) {
             alert(error);
         }
+        document.querySelector('#addForm').reset();
         loadAllCatches();
     }
 
@@ -168,7 +188,9 @@ if(logged) {
         if(!updateBtn.disabled) {
             updateBtn.addEventListener('click',updateInfo);
         }
-
+        if(!deleteBtn.disabled) {
+            deleteBtn.addEventListener('click',deleteCatch);
+        }
         divCatch.appendChild(labelOne);
         divCatch.appendChild(inputOne);
         divCatch.appendChild(labelTwo);
