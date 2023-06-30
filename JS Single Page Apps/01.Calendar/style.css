@@ -129,6 +129,10 @@ caption {
     color: white;
 }
 
+thead {
+    width: 575px;
+}
+
 /* ============================
                   Mobile Responsiveness
      ============================*/

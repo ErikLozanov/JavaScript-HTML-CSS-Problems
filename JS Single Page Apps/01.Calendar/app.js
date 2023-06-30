@@ -16,7 +16,5 @@ yearsTbody.addEventListener('click',(e)=>{
     if(e.target.classList.contains('day')) {
         getYearMonth(currYear);
     }
-    if(e.target.tagName === 'CAPTION') {
-        console.log('hi!');
-    }
 })
+
