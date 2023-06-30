@@ -98,7 +98,8 @@ async function editInfo(e) {
     }
 
     let response = await fetch(url,settings);
-
+    titleEl.value = '';
+    authorEl.value = '';
     // let result = response.json();
 
     let formTitle = document.querySelector('form h3');
