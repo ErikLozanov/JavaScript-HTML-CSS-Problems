@@ -6,8 +6,8 @@
 // implement views
 // - create request logic
 // - DOM manipulation logic
-// [ ] Catalog
-// [ ] Login
+// [x] Catalog
+// [x] Login
 // [ ] Register
 // [ ] Create
 // [ ] Details
@@ -19,6 +19,7 @@ import { homePage } from "./home.js";
 import { loginPage } from "./login.js";
 import { registerPage } from "./register.js";
 import { createPage } from "./create.js";
+import { updateNav } from "./util.js";
 
 
 const routes = {
@@ -52,9 +53,11 @@ const editSection = document.querySelector('#edit-movie');
 
 
 function logoutPage() {
-    alert('logged out');
+    localStorage.removeItem('user');
+    updateNav();
 }
 
 
 // Start application in catalog view
+updateNav();
 homePage();

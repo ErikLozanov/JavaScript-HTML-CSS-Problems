@@ -1,8 +1,15 @@
 import { showView, spinner } from "./util.js";
+import { detailsPage } from "./details.js";
 
 const section = document.querySelector('#home-page');
 const catalog = section.querySelector('#movies-list');
-
+catalog.addEventListener('click',(e)=>{
+    if(e.target.tagName == 'BUTTON') {
+        e.preventDefault();
+        const id = e.target.dataset.id;
+        detailsPage(id);
+    }
+})
 export function homePage() {
     showView(section);
     displayMovies();
@@ -17,7 +24,6 @@ async function displayMovies() {
 
 function createMoviePreview(movie) {
     const element = document.createElement('div');
-
     element.className = 'card mb-4';
     element.innerHTML = `
     <img class="card-img-top" src = "${movie.img}"
@@ -26,8 +32,8 @@ function createMoviePreview(movie) {
         <h4 class="card-title">${movie.title}</h4>
     </div>
     <div class="card-footer">
-        <a data-id="${movie.id}" href="/details/${movie.id}">
-            <button type="button" class="btn btn-info">Details</button>
+        <a href="/details/${movie._id}">
+            <button data-id="${movie._id}" type="button" class="btn btn-info">Details</button>
             </a>
             </div> 
     `;
