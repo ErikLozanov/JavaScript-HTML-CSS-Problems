@@ -16,7 +16,6 @@ async function displayMovie(id) {
 
     detailsSection.replaceChildren();
 
-
 }
 
 function createMovieCard(movie) {
