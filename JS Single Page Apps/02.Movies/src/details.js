@@ -14,7 +14,7 @@ async function displayMovie(id) {
 
     const movie = await getMovie(id);
 
-    detailsSection.replaceChildren();
+    detailsSection.replaceChildren(createMovieCard(movie));
 
 }
 
@@ -38,7 +38,9 @@ function createMovieCard(movie) {
             </div>
           </div>
         </div>
-    `
+    `;
+
+    return element;
 }
 
 async function getMovie(id) {
