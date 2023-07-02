@@ -8,11 +8,11 @@
 // - DOM manipulation logic
 // [x] Catalog
 // [x] Login
-// [ ] Register
-// [ ] Create
-// [ ] Details
-// [ ] Like
-// [ ] Edit
+// [x] Register
+// [x] Create
+// [x] Details
+// [x] Like
+// [x] Edit
 // [ ] Delete
 
 import { homePage } from "./home.js";
@@ -20,6 +20,7 @@ import { loginPage } from "./login.js";
 import { registerPage } from "./register.js";
 import { createPage } from "./create.js";
 import { updateNav } from "./util.js";
+// import { deleteMovie } from "./delete.js";
 
 
 const routes = {
