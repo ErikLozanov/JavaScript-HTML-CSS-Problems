@@ -13,7 +13,7 @@
 // [x] Details
 // [x] Like
 // [x] Edit
-// [ ] Delete
+// [x] Delete
 
 import { homePage } from "./home.js";
 import { loginPage } from "./login.js";
