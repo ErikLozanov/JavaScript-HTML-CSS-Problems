@@ -122,6 +122,9 @@ async function changeInfo(e,result) {
       img: allDatas.img,
     })
   });
+  let res = await response.json();
+
+  console.log(res);
   detailsPage(result._id);
 }
 
