@@ -2,6 +2,7 @@ import { showView, spinner } from "./util.js";
 import { homePage } from "./home.js";
 
 const detailsSection = document.querySelector("#movie-example");
+const editSection = document.querySelector('#edit-movie');
 export function detailsPage(id) {
   showView(detailsSection);
   displayMovie(id);
@@ -45,9 +46,8 @@ function createMovieCard(movie, user, likes, ownLike) {
 
     if(isOwner) {
       // console.log(element);
-      const delBtn = element.querySelector('#delBtn');
       // console.log(delBtn);
-      delBtn.addEventListener('click',(e) => deleteFunction(user,movie._id));
+      element.addEventListener('click',(e) => delOrEdit(e,user,movie._id));
     }
     const likeBtn = element.querySelector('.btn.btn-primary');
 
@@ -59,7 +59,9 @@ function createMovieCard(movie, user, likes, ownLike) {
   return element;
 }
 
-async function deleteFunction(user,movieId) {
+async function delOrEdit(e,user,movieId) {
+
+  if(e.target.tagName == 'A' && e.target.id == 'delBtn') {
 
   let response = await fetch(`http://localhost:3030/data/movies/${movieId}`,{
     method: 'DELETE',
@@ -69,11 +71,59 @@ async function deleteFunction(user,movieId) {
   let result = await response.json();
 
   homePage();
+} else if(e.target.tagName == 'A' && e.target.id == 'editBtn'){
+  
+  loadInputs(movieId);
+}
 }
 
+async function loadInputs(movieId) {
+  let response = await fetch(`http://localhost:3030/data/movies/${movieId}`);
+
+  let result = await response.json();
+
+  showView(editSection);
+
+  editInputs(result);
+
+}
+
+function editInputs(result) {
+  let form = document.getElementsByClassName('text-center border border-light p-5')[1];
 
 
+  const titleEl = document.querySelectorAll('.form-group .form-control')[3];
+  const descriptionEl = document.querySelectorAll('.form-group .form-control')[4];
+  const imgEl = document.querySelectorAll('.form-group .form-control')[5];
+  titleEl.value = result.title;
+  descriptionEl.value = result.description;
+  imgEl.value = result.img;
 
+  form.addEventListener('submit',(e)=> changeInfo(e,result));
+
+}
+
+async function changeInfo(e,result) {
+  e.preventDefault();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const formData = new FormData(e.currentTarget);
+  const allDatas = Object.fromEntries(formData);
+
+  let response = await fetch(`http://localhost:3030/data/movies/${result._id}`,{
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Authorization': user.accessToken,
+    },
+    body: JSON.stringify({
+      title: allDatas.title,
+      description: allDatas.description,
+      img: allDatas.img,
+    })
+  });
+  detailsPage(result._id);
+}
 
 async function likeMovie(e,movieId) {
     e.preventDefault();
@@ -100,7 +150,7 @@ function createControls(movie, user, likes, ownLike) {
 
   if (isOwner) {
     controls.push('<a class="btn btn-danger" id="delBtn" href="#">Delete</a>');
-    controls.push('<a class="btn btn-warning" href="#">Edit</a> ');
+    controls.push('<a class="btn btn-warning" id="editBtn" href="#">Edit</a> ');
 
 
   } else if(user && ownLike == false){
