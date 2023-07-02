@@ -8,15 +8,20 @@ export function detailsPage(id) {
 }
 
 async function displayMovie(id) {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   detailsSection.replaceChildren(spinner());
 
-  const movie = await getMovie(id);
+  const [movie, likes, ownLike] = await Promise.all([
+    getMovie(id),
+    getLikes(id),
+    getOwnLike(id, user),
+  ]);
 
-  detailsSection.replaceChildren(createMovieCard(movie));
+  detailsSection.replaceChildren(createMovieCard(movie, user, likes, ownLike));
 }
 
-function createMovieCard(movie) {
-
+function createMovieCard(movie, user, likes, ownLike) {
   const element = document.createElement("div");
   element.className = "container";
   element.innerHTML = `
@@ -29,30 +34,33 @@ function createMovieCard(movie) {
             <div class="col-md-4 text-center">
               <h3 class="my-3">Movie Description</h3>
               <p>${movie.description}</p>
-                ${createControls(movie)}
+                ${createControls(movie, user, likes, ownLike)}
             </div>
           </div>
         </div>
     `;
-
+    const likeBtn = element.querySelector('.like-btn');
+    console.log(likeBtn);
+    if(likeBtn) {
+        likeBtn.addEventListener('click',(e) => likeMovie(e, movie._id));
+    }
   return element;
 }
 
-function createControls(movie) {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const isOwner = user && user._id == movie._ownerId;
+function createControls(movie, user, likes, ownLike) {
+  const isOwner = user && user._id == movie._ownerId;
 
-    if(isOwner) {
-        return `
-        <a class="btn btn-danger" href="#">Delete</a>
-        <a class="btn btn-warning" href="#">Edit</a> 
-        `;
-    } else {
-        return `  
-        <a class="btn btn-primary" href="#">Like</a>
-        <span class="enrolled-span">Liked 1</span>
-        `;
-    }
+  let controls = [];
+
+  if (isOwner) {
+    controls.push('<a class="btn btn-danger" href="#">Delete</a>');
+    controls.push('<a class="btn btn-warning" href="#">Edit</a> ');
+  } else if(user && ownLike == false){
+    controls.push('<a class="btn btn-primary" href="#">Like</a>');
+  }
+  controls.push(`<span class="enrolled-span">Liked ${likes}</span>`);
+
+  return controls.join('');
 }
 
 async function getMovie(id) {
@@ -61,4 +69,35 @@ async function getMovie(id) {
   const movie = await res.json();
 
   return movie;
+}
+
+async function getLikes(id) {
+  const res = await fetch(
+    `http://localhost:3030/data/likes?where=movieId%3D%22${id}%22&distinct=_ownerId&count`
+  );
+
+  const likes = await res.json();
+
+  return likes;
+}
+
+async function getOwnLike(movieId, user) {
+  if (!user) {
+    return false;
+  } else {
+    const userId = user._id;
+
+    const res = await fetch(
+      `http://localhost:3030/data/likes?where=movieId%3D%22${movieId}%22%20and%20_ownerId%3D%22${userId}%22`
+    );
+
+    const like = await res.json();
+    return like.length > 0;
+  }
+}
+
+
+async function likeMovie(e,movieId) {
+    e.preventDefault();
+    console.log(movieId);
 }
