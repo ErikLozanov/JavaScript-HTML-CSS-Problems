@@ -77,11 +77,11 @@ async function createTheme (result) {
 
 
         let form = document.querySelector('.answer form');
-    form.addEventListener('submit',createComment);
+    form.addEventListener('submit',(e) => createComment(e,result._id));
     loadComments(result._id);
 }
 
-async function createComment(e) {
+async function createComment(e,id) {
     e.preventDefault();
     let formData = new FormData(e.currentTarget);
 
@@ -89,26 +89,38 @@ async function createComment(e) {
     let username = formData.get('username');
     const date = new Date();
 
-
-    let response = await fetch('http://localhost:3030/jsonstore/collections/myboard/comments',{
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({postText,username,date})
-    });
-
-    let result = await response.json();
+    try {
+        let response = await fetch(`http://localhost:3030/jsonstore/collections/myboard/comments/${id}`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({postText,username,date})
+        });
     
-    loadComments();
+        if(!response.ok) {
+            const error = response.json();
+            throw new Error(error.message);
+        }
+        if(postText == '' || username == '') {
+            throw new Error('Please fill in all inputs!');
+        }
+        let result = await response.json();
+        
+        loadComments(id);
+    } catch (error) {
+        alert(error.message);
+        return;
+    }
+
+
 }
 
 
 async function loadComments(themeId) {
-
+    console.log(themeId);
     const commentDiv = document.querySelector('.comment');
-    let response = await fetch('http://localhost:3030/jsonstore/collections/myboard/comments');
+    let response = await fetch(`http://localhost:3030/jsonstore/collections/myboard/comments/${themeId}`);
     let parentThemeDiv = commentDiv.parentElement;
 
-    console.log(parentThemeDiv);
     let result = await response.json();
 
     for(let info of Object.values(result)) {
