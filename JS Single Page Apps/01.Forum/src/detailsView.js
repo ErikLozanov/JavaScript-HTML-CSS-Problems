@@ -25,6 +25,7 @@ async function loadThemeContent (id) {
 
 async function createTheme (result) {
     section.replaceChildren();
+
     let createContent = document.createElement('div');
     createContent.classList.add('theme-content');
     createContent.dataset.id = result._id;
@@ -90,6 +91,11 @@ async function createComment(e,id) {
     const date = new Date();
 
     try {
+
+        if(postText == '' || username == '') {
+            throw new Error('Please fill in all inputs!');
+        }
+
         let response = await fetch(`http://localhost:3030/jsonstore/collections/myboard/comments/${id}`,{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -100,15 +106,13 @@ async function createComment(e,id) {
             const error = response.json();
             throw new Error(error.message);
         }
-        if(postText == '' || username == '') {
-            throw new Error('Please fill in all inputs!');
-        }
+
         let result = await response.json();
-        
+        document.querySelector('.answer form').reset();
         loadComments(id);
+
     } catch (error) {
         alert(error.message);
-        return;
     }
 
 
@@ -116,8 +120,10 @@ async function createComment(e,id) {
 
 
 async function loadComments(themeId) {
-    console.log(themeId);
+    
     const commentDiv = document.querySelector('.comment');
+    commentDiv.querySelectorAll('.user-comment').forEach(x=> x.remove());
+
     let response = await fetch(`http://localhost:3030/jsonstore/collections/myboard/comments/${themeId}`);
     let parentThemeDiv = commentDiv.parentElement;
 
@@ -136,7 +142,7 @@ async function loadComments(themeId) {
 function createCommentElement(result,themeId) {
     let element = document.createElement('div');
     element.dataset.id = themeId;
-    element.id = 'user-comment';
+    element.className = 'user-comment';
     element.innerHTML = `
     <div class="topic-name-wrapper">
     <div class="topic-name">

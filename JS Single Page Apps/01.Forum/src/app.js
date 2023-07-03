@@ -31,14 +31,17 @@ async function createTopic(e) {
         const postText = formData.get('postText');
         const date = new Date().toLocaleDateString();
         try {
+
+            if(topicName == '' || username == '' || postText == '') {
+                throw new Error('All fields must be filled!')
+            }
+
             const response = await fetch('http://localhost:3030/jsonstore/collections/myboard/posts',{
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({topicName,username,postText,date})
             })
-            if(topicName == '' || username == '' || postText == '') {
-                throw new Error('All fields must be filled!')
-            }
+
             if(!response.ok) {
                 const error = await response.json();
                 throw new Error(error.message)
