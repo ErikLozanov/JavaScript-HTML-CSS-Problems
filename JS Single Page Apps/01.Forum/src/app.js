@@ -31,7 +31,6 @@ async function createTopic(e) {
         const postText = formData.get('postText');
         const date = new Date().toLocaleDateString();
         try {
-
             if(topicName == '' || username == '' || postText == '') {
                 throw new Error('All fields must be filled!')
             }
