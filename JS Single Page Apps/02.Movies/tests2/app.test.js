@@ -72,9 +72,17 @@ describe('E2E Tests', function() {
                 username: "user",
                 _id: "2",
             }
+
+            let email;
+            let password;
+
             await page.route('**/users/login', (route,request) =>{
 
-                console.log(request);
+                let body = JSON.parse(request.postData());
+                email = body.email;
+                password = body.password;
+
+
                 route.fulfill({
                                 status: 200,
                                 contentType: 'application/json',
@@ -85,7 +93,17 @@ describe('E2E Tests', function() {
             await page.goto('http://127.0.0.1:5500/JS%20Single%20Page%20Apps/02.Movies/index.html');
             // await page.locator('text=Login').click();
             await page.click('text=Login');
-            console.log(1);
+            await page.fill('input[name="email"]','peter@abv.bg');
+            await page.fill('input[name="password"]','123456');
+
+            await Promise.all([
+                page.waitForResponse('**/users/login'),
+                page.click('text=Log in'),
+            ]);
+
+            expect(email).to.equal('peter@abv.bg');
+            expect(password).to.equal('123456');
+            
         })
     })
 })
